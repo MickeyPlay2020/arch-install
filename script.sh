@@ -81,8 +81,8 @@ echo
 
   if [[ "$answer" == "Y" || "$answer" == "y" ]]; then
     echo
-    echo "***** Installing $pkg *****"
-
+    echo "***** INSTALLING $pkg *****"
+    echo
     if [[ "$source" == "pacman" ]]; then
       pacman -S --noconfirm --needed "$pkg"
     else
