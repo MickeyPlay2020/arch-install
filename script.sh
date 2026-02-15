@@ -99,6 +99,8 @@ fi
 install_package() {
   local pkg="$1"
   local source="$2"
+  
+echo
 
   read -p "Установить $pkg? (Y/N): " answer
 
