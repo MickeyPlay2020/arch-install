@@ -18,7 +18,7 @@ pacman -Syu --noconfirm
 # XFCE + LightDM
 # -------------------------------
 echo
-echo "Устанавливаем XFCE4 и LightDM..."
+echo "***** Installing XFCE4 and LightDM***** "
 
 pacman -S --noconfirm --needed \
   xfce4 xfce4-goodies \
@@ -54,7 +54,7 @@ fi
 # -------------------------------
 if ! command -v yay &> /dev/null; then
   echo
-  echo "Installing yay (AUR helper)..."
+  echo "***** Installing yay (AUR helper)... *****"
 
   pacman -S --noconfirm --needed git base-devel
 
@@ -81,7 +81,7 @@ echo
 
   if [[ "$answer" == "Y" || "$answer" == "y" ]]; then
     echo
-    echo "Installing $pkg..."
+    echo "***** Installing $pkg *****"
 
     if [[ "$source" == "pacman" ]]; then
       pacman -S --noconfirm --needed "$pkg"
