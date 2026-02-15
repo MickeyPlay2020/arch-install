@@ -15,31 +15,6 @@ echo "Обновляем систему..."
 pacman -Syu --noconfirm
 
 # -------------------------------
-# Клавиатура EN + RU
-# -------------------------------
-echo
-echo "Настраиваем клавиатуру EN/RU (Alt+Shift)..."
-
-KB_CONF="/etc/X11/xorg.conf.d/00-keyboard.conf"
-
-if [[ ! -f "$KB_CONF" ]]; then
-  mkdir -p /etc/X11/xorg.conf.d
-
-  cat > "$KB_CONF" <<EOF
-Section "InputClass"
-    Identifier "system-keyboard"
-    MatchIsKeyboard "on"
-    Option "XkbLayout" "us,ru"
-    Option "XkbOptions" "grp:alt_shift_toggle"
-EndSection
-EOF
-
-  echo "Раскладки добавлены (Alt+Shift)."
-else
-  echo "Файл клавиатуры уже существует, пропускаем."
-fi
-
-# -------------------------------
 # XFCE + LightDM
 # -------------------------------
 echo
@@ -79,7 +54,7 @@ fi
 # -------------------------------
 if ! command -v yay &> /dev/null; then
   echo
-  echo "Устанавливаем yay (AUR helper)..."
+  echo "Installing yay (AUR helper)..."
 
   pacman -S --noconfirm --needed git base-devel
 
@@ -102,10 +77,11 @@ install_package() {
   
 echo
 
-  read -p "Установить $pkg? (Y/N): " answer
+  read -p "Install $pkg? (y/n): " answer
 
   if [[ "$answer" == "Y" || "$answer" == "y" ]]; then
-    echo "Устанавливаем $pkg..."
+    echo
+    echo "Installing $pkg..."
 
     if [[ "$source" == "pacman" ]]; then
       pacman -S --noconfirm --needed "$pkg"
