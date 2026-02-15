@@ -2,7 +2,8 @@
 set -e
 
 echo "======================================"
-echo "   Скрипт установки Arch Linux (XFCE)  "
+echo " Arch Linux Setup Script v2 (XFCE)"
+echo " Перезапускаемый (idempotent)"
 echo "======================================"
 
 # Проверка root
@@ -24,23 +25,26 @@ pacman -Syu --noconfirm
 echo
 echo "Настраиваем русскую локаль..."
 
-sed -i 's/^#\(ru_RU.UTF-8\)/\1/' /etc/locale.gen
-locale-gen
-
-# Язык системы оставляем английским
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
-
-echo "Русская локаль добавлена."
+if ! grep -q "^ru_RU.UTF-8" /etc/locale.gen; then
+  sed -i 's/^#\(ru_RU.UTF-8\)/\1/' /etc/locale.gen
+  locale-gen
+  echo "Русская локаль включена."
+else
+  echo "Русская локаль уже настроена."
+fi
 
 # -------------------------------
-# Русская клавиатура EN + RU
+# Клавиатура EN + RU
 # -------------------------------
 echo
-echo "Настраиваем клавиатуру: EN + RU (Alt+Shift)..."
+echo "Настраиваем клавиатуру EN/RU (Alt+Shift)..."
 
-mkdir -p /etc/X11/xorg.conf.d
+KB_CONF="/etc/X11/xorg.conf.d/00-keyboard.conf"
 
-cat > /etc/X11/xorg.conf.d/00-keyboard.conf <<EOF
+if [[ ! -f "$KB_CONF" ]]; then
+  mkdir -p /etc/X11/xorg.conf.d
+
+  cat > "$KB_CONF" <<EOF
 Section "InputClass"
     Identifier "system-keyboard"
     MatchIsKeyboard "on"
@@ -49,15 +53,18 @@ Section "InputClass"
 EndSection
 EOF
 
-echo "Раскладки включены. Переключение: Alt+Shift"
+  echo "Раскладки добавлены (Alt+Shift)."
+else
+  echo "Файл клавиатуры уже существует, пропускаем."
+fi
 
 # -------------------------------
 # XFCE + LightDM
 # -------------------------------
 echo
-echo "Устанавливаем XFCE4 и экран входа LightDM..."
+echo "Устанавливаем XFCE4 и LightDM..."
 
-pacman -S --noconfirm \
+pacman -S --noconfirm --needed \
   xfce4 xfce4-goodies \
   lightdm lightdm-gtk-greeter \
   networkmanager
@@ -65,16 +72,35 @@ pacman -S --noconfirm \
 systemctl enable NetworkManager
 systemctl enable lightdm
 
-echo "XFCE4 и LightDM установлены."
+echo "XFCE и LightDM готовы."
+
+# -------------------------------
+# Включаем multilib (Steam)
+# -------------------------------
+echo
+echo "Проверяем multilib (нужно для Steam)..."
+
+if grep -q "^\#\[multilib\]" /etc/pacman.conf; then
+  echo "Включаем multilib..."
+
+  sed -i '/#\[multilib\]/,/#Include/ s/^#//' /etc/pacman.conf
+
+  echo "Обновляем базы пакетов..."
+  pacman -Sy --noconfirm
+
+  echo "multilib включён."
+else
+  echo "multilib уже включён, пропускаем."
+fi
 
 # -------------------------------
 # Установка yay
 # -------------------------------
 if ! command -v yay &> /dev/null; then
   echo
-  echo "Устанавливаем yay (для AUR)..."
+  echo "Устанавливаем yay (AUR helper)..."
 
-  pacman -S --noconfirm git base-devel
+  pacman -S --noconfirm --needed git base-devel
 
   sudo -u "$USER_NAME" git clone https://aur.archlinux.org/yay.git /tmp/yay
   cd /tmp/yay
@@ -82,10 +108,12 @@ if ! command -v yay &> /dev/null; then
   sudo -u "$USER_NAME" makepkg -si --noconfirm
 
   echo "yay установлен."
+else
+  echo "yay уже установлен, пропускаем."
 fi
 
 # -------------------------------
-# Функция установки пакетов
+# Функция установки программ
 # -------------------------------
 install_package() {
   local pkg="$1"
@@ -97,9 +125,9 @@ install_package() {
     echo "Устанавливаем $pkg..."
 
     if [[ "$source" == "pacman" ]]; then
-      pacman -S --noconfirm "$pkg"
+      pacman -S --noconfirm --needed "$pkg"
     else
-      sudo -u "$USER_NAME" yay -S --noconfirm "$pkg"
+      sudo -u "$USER_NAME" yay -S --noconfirm --needed "$pkg"
     fi
   fi
 }
@@ -121,9 +149,4 @@ install_package "google-chrome" "yay"
 # -------------------------------
 # Завершение
 # -------------------------------
-echo
-echo "======================================"
-echo "Установка завершена!"
-echo "Перезагрузи систему командой:"
-echo "reboot"
-echo "======================================"
+reboot
