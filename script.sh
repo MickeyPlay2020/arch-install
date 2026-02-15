@@ -1,14 +1,12 @@
 #!/bin/bash
 set -e
 
-echo "======================================"
-echo " Arch Linux Setup Script v2 (XFCE)"
-echo " Перезапускаемый (idempotent)"
-echo "======================================"
+sudo -v
+while true; do sudo -n true; sleep 60; done 2>/dev/null &
 
 # Проверка root
 if [[ $EUID -ne 0 ]]; then
-  echo "Запусти скрипт через sudo:"
+  echo "Run script using sudo:"
   echo "sudo ./arch-setup.sh"
   exit 1
 fi
