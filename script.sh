@@ -10,13 +10,15 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+# Получаем имя обычного пользователя, который вызвал sudo
+USER_NAME=$SUDO_USER
+
 echo
 echo "Обновляем систему..."
 pacman -Syu --noconfirm
 
 echo
 echo "Устанавливаем XFCE4 и дисплей-менеджер LightDM..."
-
 pacman -S --noconfirm \
   xfce4 xfce4-goodies \
   lightdm lightdm-gtk-greeter \
@@ -37,21 +39,19 @@ if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
   echo
   echo "Устанавливаем yay (для AUR)..."
 
-  # Ставим нужные инструменты
+  # Ставим инструменты для сборки
   pacman -S --noconfirm git base-devel
 
-  # Создаём временную папку
-  cd /tmp
+  # Клонируем yay от имени обычного пользователя
+  sudo -u "$USER_NAME" git clone https://aur.archlinux.org/yay.git /tmp/yay
+  cd /tmp/yay
 
-  # Скачиваем yay
-  git clone https://aur.archlinux.org/yay.git
-  cd yay
-  makepkg -si --noconfirm
+  # Собираем и устанавливаем yay от обычного пользователя
+  sudo -u "$USER_NAME" makepkg -si --noconfirm
 
   echo
-  echo "Устанавливаем Discord..."
-  sudo -u "$SUDO_USER" yay -S --noconfirm discord
-
+  echo "Устанавливаем Discord через yay..."
+  sudo -u "$USER_NAME" yay -S --noconfirm discord
 fi
 
 echo
