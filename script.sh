@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e
 
-sudo -v
-while true; do sudo -n true; sleep 60; done 2>/dev/null &
-
 # Проверка root
 if [[ $EUID -ne 0 ]]; then
   echo "Run script using sudo:"
