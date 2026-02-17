@@ -43,16 +43,17 @@ echo -----------------------------
 echo
 
 if grep -q "^\#\[multilib\]" /etc/pacman.conf; then
-  echo "Включаем multilib..."
-
-  sed -i '/#\[multilib\]/,/#Include/ s/^#//' /etc/pacman.conf
+  echo
+  echo "Enabling multilib..."
+  echo
+  sudo sed -i '/#\[multilib\]/,/#Include/ s/^#//' /etc/pacman.conf
 
   echo "Updating package databases (from miltilib)"
-  pacman -Sy --noconfirm
+  sudo pacman -Sy --noconfirm
 
-  echo "multilib enabled"
+  echo "multilib enabled!"
 else
-  echo "multilib prepared already"
+  echo "multilib already enabled, skipping"
 fi
 
 # -------------------------------
