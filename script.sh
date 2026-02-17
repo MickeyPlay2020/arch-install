@@ -66,7 +66,7 @@ if ! command -v yay &> /dev/null; then
   echo ------------------------------------------
   echo
 
-  pacman -S --noconfirm --needed git base-devel
+  sudo pacman -S --noconfirm --needed base-devel
 
   sudo -u "$USER_NAME" git clone https://aur.archlinux.org/yay.git /tmp/yay
   cd /tmp/yay
