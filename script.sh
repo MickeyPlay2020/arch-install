@@ -114,7 +114,6 @@ install_package "discord" "yay"
 install_package "steam" "yay"
 install_package "telegram-desktop" "pacman"
 install_package "visual-studio-code-bin" "yay"
-install_package "jdk17-openjdk" "pacman"
 install_package "google-chrome" "yay"
 install_package "gparted" "pacman" #для работы с флешками и другими носителями
 install_package "wireguard-tools" "pacman" #WIREGUARD
