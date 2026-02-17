@@ -29,7 +29,7 @@ echo "***** Installing XFCE4 and LightDM***** "
 echo ----------------------------------------
 echo
 
-pacman -S --noconfirm --needed \
+sudo pacman -S --noconfirm --needed \
   xfce4 xfce4-goodies \
   lightdm lightdm-gtk-greeter
 
