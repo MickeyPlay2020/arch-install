@@ -25,7 +25,7 @@ sudo pacman -Syu --noconfirm
 
 echo
 echo ----------------------------------------
-echo "***** Installing XFCE4 and LightDM***** "
+echo "***** Installing XFCE4 and LightDM *****"
 echo ----------------------------------------
 echo
 
