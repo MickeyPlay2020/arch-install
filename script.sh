@@ -117,8 +117,7 @@ install_package "visual-studio-code-bin" "yay"
 install_package "jdk17-openjdk" "pacman"
 install_package "google-chrome" "yay"
 install_package "gparted" "pacman" #для работы с флешками и другими носителями
-install_package "networkmanager-wireguard" "pacman" #WIREGUARD
-install_package "libreoffice-fresh-writer" "pacman" #аналог Word
-install_package "libreoffice-fresh-calc" "pacman" #аналог Excel
+install_package "wireguard-tools" "pacman" #WIREGUARD
+install_package "libreoffice-fresh" "pacman" #аналог Word
 
 reboot
