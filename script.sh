@@ -118,5 +118,6 @@ install_package "google-chrome" "yay"
 install_package "gparted" "pacman" #для работы с флешками и другими носителями
 install_package "wireguard-tools" "pacman" #WIREGUARD
 install_package "libreoffice-fresh" "pacman" #аналог Word
+install_package "transmission-gtk" "pacman" #utorrent
 
 reboot
