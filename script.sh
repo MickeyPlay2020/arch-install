@@ -1,4 +1,4 @@
-#!/bin/bash
+/#!/bin/bash
 set -e
 
 # запрос пароля только 1 раз от юзера
@@ -17,16 +17,16 @@ fi
 USER_NAME=$whoami
 
 echo
-echo ---------------------------------
+echo ------------------------------------
 echo "***** Updating OS using pacman *****"
-echo ---------------------------------
+echo ------------------------------------
 echo
-pacman -Syu --noconfirm
+sudo pacman -Syu --noconfirm
 
 echo
-echo ---------------------------------
+echo ----------------------------------------
 echo "***** Installing XFCE4 and LightDM***** "
-echo ---------------------------------
+echo ----------------------------------------
 echo
 
 pacman -S --noconfirm --needed \
@@ -37,9 +37,9 @@ pacman -S --noconfirm --needed \
 systemctl enable lightdm
 
 echo
-echo ---------------------------------
+echo -----------------------------
 echo "check multilib (for Steam)..."
-echo ---------------------------------
+echo -----------------------------
 echo
 
 if grep -q "^\#\[multilib\]" /etc/pacman.conf; then
@@ -60,9 +60,9 @@ fi
 # -------------------------------
 if ! command -v yay &> /dev/null; then
   echo
-  echo ---------------------------------
+  echo ------------------------------------------
   echo "***** Installing yay (AUR helper)... *****"
-  echo ---------------------------------
+  echo ------------------------------------------
   echo
 
   pacman -S --noconfirm --needed git base-devel
@@ -103,9 +103,9 @@ echo
 }
 
 echo
-echo ---------------------------------
-echo "Additional apps:"
-echo ---------------------------------
+echo ---------------------------
+echo "Installing additional apps:"
+echo ---------------------------
 echo
 
 install_package "discord" "yay"
