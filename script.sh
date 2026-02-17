@@ -36,8 +36,9 @@ sudo pacman -S --noconfirm --needed \
 #включаем в автозагрузку экран блокировки
 systemctl enable lightdm
 
+# multilib нужен только для Steam, его бы включать только при его установке (в будущем нужно исправить) !!!!!!!!!
 echo
-echo -----------------------------
+echo ----------------------------- 
 echo "check multilib (for Steam)..."
 echo -----------------------------
 echo
@@ -113,6 +114,11 @@ install_package "discord" "yay"
 install_package "steam" "yay"
 install_package "telegram-desktop" "pacman"
 install_package "visual-studio-code-bin" "yay"
+install_package "jdk17-openjdk" "pacman"
 install_package "google-chrome" "yay"
+install_package "gparted" "pacman" #для работы с флешками и другими носителями
+install_package "networkmanager-wireguard" "pacman" #WIREGUARD
+install_package "libreoffice-fresh-writer" "pacman" #аналог Word
+install_package "libreoffice-fresh-calc" "pacman" #аналог Excel
 
 reboot
