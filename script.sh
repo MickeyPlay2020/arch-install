@@ -68,10 +68,10 @@ if ! command -v yay &> /dev/null; then
 
   sudo pacman -S --noconfirm --needed base-devel
 
-  sudo -u "$USER_NAME" git clone https://aur.archlinux.org/yay.git /tmp/yay
+  git clone https://aur.archlinux.org/yay.git /tmp/yay
   cd /tmp/yay
 
-  sudo -u "$USER_NAME" makepkg -si --noconfirm
+  makepkg -si --noconfirm
 
   echo "yay installed."
 else
