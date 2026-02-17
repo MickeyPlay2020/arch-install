@@ -1,7 +1,7 @@
 /#!/bin/bash
 set -e
 
-# запрос пароля только 1 раз от юзера
+# запрос пароля только 1 раз от юзера (по факту не помогает)
 sudo -v
 while true; do sudo -n true; sleep 60; done 2>/dev/null &
 
