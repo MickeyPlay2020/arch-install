@@ -7,9 +7,9 @@ while true; do sudo -n true; sleep 60; done 2>/dev/null &
 
 
 # Проверка root
-if [[ $EUID -ne 0 ]]; then
-  echo "Run script using sudo:"
-  echo "sudo ./arch-setup.sh"
+if [[ $EUID -eq 0 ]]; then
+  echo "Run script WITHOUT sudo:"
+  echo "sh ./arch-setup.sh"
   exit 1
 fi
 
