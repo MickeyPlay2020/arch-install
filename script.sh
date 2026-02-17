@@ -96,9 +96,9 @@ echo
     echo ---------------------------------
     echo
     if [[ "$source" == "pacman" ]]; then
-      pacman -S --noconfirm --needed "$pkg"
+      sudo pacman -S --noconfirm --needed "$pkg"
     else
-      sudo -u "$USER_NAME" yay -S --noconfirm --needed "$pkg"
+      yay -S --noconfirm --needed "$pkg"
     fi
   fi
 }
