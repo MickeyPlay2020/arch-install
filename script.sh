@@ -118,7 +118,7 @@ install_package "telegram-desktop" "pacman"
 install_package "gimp" "pacman" #аналог Adobe Photoshop
 install_package "wireguard-tools" "pacman" #WIREGUARD
 install_package "gparted" "pacman" #для работы с флешками и другими носителями
-install_package "libreoffice-fresh" "pacman" #аналог Word
+install_package "libreoffice-fresh" "pacman" #аналог Microsoft Office
 install_package "transmission-gtk" "pacman" #аналог utorrent
 install_package "visual-studio-code-bin" "yay"
 
